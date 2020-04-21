@@ -1,15 +1,11 @@
 const express = require('express');
-
+const multer = require('multer');
+const uploadConfig = require('./config/upload');
+const SessionController = require('./controllers/SessionController');
 const routes = express.Router();
+const upload = multer(uploadConfig);
 
 
-routes.get('/',(req, res) => {
-    return res.json({ message: `fala meu compas ${req.query.name}` });
-});
 
-routes.post('/devs', (req, res)=>{
-    
-    return res.json(req.body);
-})
-
+routes.post('/sessions', upload.single('image'), SessionController.store);
 module.exports = routes;
